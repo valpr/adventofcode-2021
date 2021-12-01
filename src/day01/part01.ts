@@ -2,16 +2,11 @@ import { readFileSync } from 'fs';
 
 const input = readFileSync('./input.txt', 'utf-8').split('\n').map(num => parseInt(num));
 
-const dict: { [neededNum: number]: number} = {};
-const target = 2020;
-const answer = input.find((num: number) => {
-    if (dict[num]){
-        return true;
+let increases = 0
+for (let i = 1; i < input.length; i ++){
+    if (input[i] > input[i-1]){
+        increases++
     }
-    else{
-        dict[target-num] = num;
-    }
-})
+}
 
-if (answer)
-    console.log(answer * (2020 - answer));
+console.log(increases);
