@@ -1,9 +1,9 @@
 import { readFileSync } from 'fs';
+const fileName = process.argv[2]
+let fishArray = readFileSync(fileName, 'utf-8').split(',').map(num => parseInt(num));
 
-let fishArray = readFileSync('./input.txt', 'utf-8').split(',').map(num => parseInt(num));
 
-
-const days = 256
+const days = 80
 const fishCounts = [0,0,0,0,0,0,0,0,0]
 for (const fish of fishArray){
     fishCounts[fish] += 1

@@ -1,50 +1,20 @@
 import { readFileSync } from 'fs';
+const fileName = process.argv[2]
+let fishArray = readFileSync(fileName, 'utf-8').split(',').map(num => parseInt(num));
 
-const input = readFileSync('./input.txt', 'utf-8').split('\n');
-const n = 1000
-const lineArray = Array.from(Array(n), _ => Array(n).fill(0))
-let overlap = 0
-for (const line of input){
-    const [c1, c2] = line.split(' -> ').map(num => num.split(',').map(nu => parseInt(nu)));
-    if (c1[0] === c2[0]){
-        let sameRow = c1[0]
-        let smaller = c1[1] > c2[1] ? c2[1] : c1[1]
-        let larger = c1[1] > c2[1] ? c1[1] : c2[1]
 
-        for (let i = smaller; i <= larger; i++){
-            lineArray[i][sameRow] += 1
-            if (lineArray[i][sameRow] === 2){
-                overlap++;
-            }
-        }
-    } else if (c1[1] === c2[1]){
-        let sameCol = c1[1]
-        let smaller = c1[0] > c2[0] ? c2[0] : c1[0]
-        let larger = c1[0] > c2[0] ? c1[0] : c2[0]
+const days = 256
+const fishCounts = [0,0,0,0,0,0,0,0,0]
+for (const fish of fishArray){
+    fishCounts[fish] += 1
+}
 
-        for (let i = smaller; i <= larger; i++){
-            lineArray[sameCol][i] += 1
-            if (lineArray[sameCol][i] === 2){
-                overlap++;
-            }
-        }
-    } else {
-        let smaller = c1[1] > c2[1] ? c2 : c1
-        let larger = c1[1] > c2[1] ? c1 : c2
-
-        let row = smaller[0]
-        let increment = smaller[0] < larger[0] ? 1 : -1
-
-        for (let i = smaller[1]; i <= larger[1]; i++){
-            lineArray[i][row] += 1
-            if (lineArray[i][row] === 2){
-                overlap++;
-            }
-            row += increment
-        }
-
+for (let i = 0; i < days; i++){
+    if (fishCounts.length > 1){
+        let fishReset: number = fishCounts.shift() || 0
+        fishCounts[6] += fishReset
+        fishCounts.push(fishReset)
     }
 }
-console.log(lineArray);
 
-console.log(overlap)
+console.log(fishCounts.reduce((previousVal, currentVal)=> previousVal+ currentVal))
