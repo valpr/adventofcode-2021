@@ -1,18 +1,17 @@
 import { readFileSync } from 'fs';
 const fileName = process.argv[2]
-const input = readFileSync(fileName, 'utf-8').split('\n');
+const input = readFileSync(fileName, 'utf-8').split(',').map(elem=>parseInt(elem));
 
-console.log(input)
+// find the median?
+// Then amount of fuel spent is difference between position and 
+input.sort((a,b)=> a-b);
 
-const days = 256
-const fishCounts = [0,0,0,0,0,0,0,0,0]
+const position = input[Math.floor(input.length/2)]
 
-for (const x of input){
+const fuelSpent = input.reduce((acc, current) => {
+    // console.log(acc+ Math.abs(position-current))
+    return acc+ Math.abs(position-current)
+},0)
 
-}
-
-for (let i = 0; i < days; i++){
-
-}
-
-console.log(fishCounts.reduce((previousVal, currentVal)=> previousVal+ currentVal))
+console.log('Position: ',position)
+console.log('Fuel Spent: ', fuelSpent)
