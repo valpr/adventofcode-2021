@@ -1,4 +1,4 @@
-import { access, accessSync, readFileSync } from 'fs';
+import { readFileSync } from 'fs';
 const fileName = process.argv[2]
 const [template, pairs] = readFileSync(fileName, 'utf-8').split('\n\n');
 const legend: {[key: string]: string} = pairs.split('\n').map(elem => elem.split(' -> ')).reduce((acc, currValue) => {
